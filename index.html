@@ -1,0 +1,796 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Breakwater | Less chasing. More surfing.</title>
+
+<style>
+:root {
+  --navy: #081d27;
+  --mint: #b9f3db;
+  --ink: #18313a;
+  --muted: #61757c;
+  --paper: #f5f8f7;
+}
+
+* { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  margin: 0;
+  font: 16px/1.65 Arial, Helvetica, sans-serif;
+  color: var(--ink);
+}
+
+.wrap {
+  width: min(1080px, 90%);
+  margin: auto;
+}
+
+header, .hero, footer {
+  background: var(--navy);
+  color: white;
+}
+
+nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 0;
+}
+
+.logo {
+  font-size: 27px;
+  font-weight: 900;
+  color: var(--mint);
+  text-decoration: none;
+}
+
+.small {
+  font-size: 12px;
+  letter-spacing: 1.5px;
+}
+
+.hero {
+  padding: 30px 0 75px;
+}
+
+.hero-grid {
+  display: grid;
+  gap: 30px;
+  align-items: center;
+}
+
+.hero img {
+  width: 100%;
+  height: 270px;
+  object-fit: cover;
+  border-radius: 20px;
+  background: #285369;
+}
+
+.eyebrow {
+  color: var(--mint);
+  font-size: 12px;
+  font-weight: bold;
+  letter-spacing: 1.6px;
+  text-transform: uppercase;
+}
+
+h1 {
+  font-size: clamp(42px, 8vw, 76px);
+  line-height: 1.07;
+  letter-spacing: -2px;
+  margin: 18px 0;
+}
+
+h2 {
+  font-size: clamp(30px, 5vw, 44px);
+  line-height: 1.2;
+  letter-spacing: -1px;
+  margin: 0 0 16px;
+}
+
+h3 { margin: 12px 0 7px; }
+p { margin: 8px 0 15px; }
+
+.hero p {
+  color: #d1e0e3;
+  font-size: 18px;
+  max-width: 570px;
+}
+
+.btn {
+  display: inline-block;
+  background: var(--mint);
+  color: var(--navy);
+  padding: 13px 23px;
+  border: 0;
+  border-radius: 10px;
+  font-weight: bold;
+  text-decoration: none;
+  cursor: pointer;
+  font-size: 15px;
+}
+
+.btn.dark {
+  background: var(--navy);
+  color: white;
+}
+
+section { padding: 70px 0; }
+.muted { color: var(--muted); }
+
+.problem-grid, .steps {
+  display: grid;
+  gap: 14px;
+  margin-top: 28px;
+}
+
+.problem-grid {
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.problem-card {
+  background: var(--paper);
+  padding: 22px 8px;
+  text-align: center;
+  border-radius: 14px;
+}
+
+.problem-card span {
+  font-size: 30px;
+  display: block;
+}
+
+.quote, .highlight {
+  background: #edf9f2;
+  border-left: 4px solid #76d5b2;
+  padding: 16px 20px;
+  margin: 24px 0;
+  border-radius: 0 10px 10px 0;
+}
+
+.how, .price-section {
+  background: var(--paper);
+}
+
+.step, .note-card {
+  background: white;
+  border: 1px solid #e0e9e7;
+  padding: 24px;
+  border-radius: 16px;
+}
+
+.step-number {
+  display: inline-block;
+  background: #e9f2ef;
+  border-radius: 8px;
+  padding: 6px 12px;
+  font-weight: 900;
+}
+
+.price-section { text-align: center; }
+
+.price-card {
+  max-width: 490px;
+  margin: 24px auto 0;
+  background: white;
+  border-radius: 18px;
+  padding: 35px 20px;
+  border: 1px solid #e0e9e7;
+}
+
+.price {
+  font-size: 64px;
+  font-weight: 900;
+  line-height: 1.2;
+}
+
+.price small {
+  font-size: 16px;
+  font-weight: normal;
+}
+
+.waitlist { background: var(--mint); }
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  max-width: 650px;
+  margin-top: 22px;
+}
+
+input {
+  padding: 15px;
+  font: inherit;
+  border: 1px solid #95b8aa;
+  border-radius: 9px;
+  min-width: 0;
+}
+
+.fine {
+  font-size: 12px;
+  color: #526c65;
+}
+
+#thanks {
+  display: none;
+  background: #eafff3;
+  border-radius: 9px;
+  padding: 16px;
+  font-weight: bold;
+  max-width: 650px;
+}
+
+.note-card { margin: 22px 0; }
+
+.tag {
+  display: inline-block;
+  background: #e5f8ee;
+  color: #145a44;
+  border-radius: 99px;
+  padding: 5px 12px;
+  font-size: 12px;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+ul { padding-left: 22px; }
+li { margin-bottom: 8px; }
+
+footer { padding: 28px 0; }
+footer a { color: var(--mint); }
+
+.footer-flex {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+#notes-view {
+  display: none;
+  background: var(--paper);
+}
+
+.notes-header {
+  background: var(--navy);
+  color: white;
+  padding: 52px 0;
+}
+
+.notes-header h1 {
+  font-size: clamp(36px, 6vw, 56px);
+}
+
+.notes-header p { color: #d1e0e3; }
+.notes-content { padding: 45px 0; }
+.return { margin: 20px 0 30px; }
+
+.notes-footer {
+  padding: 25px 0;
+  background: var(--navy);
+  color: white;
+}
+
+a:focus-visible,
+button:focus-visible,
+input:focus-visible {
+  outline: 3px solid #edb24e;
+  outline-offset: 3px;
+}
+
+@media (min-width: 760px) {
+  .hero-grid { grid-template-columns: 1fr 1fr; }
+  .hero img { height: 480px; }
+  .steps { grid-template-columns: repeat(3, 1fr); }
+  form { flex-direction: row; }
+  form input { flex: 1; }
+}
+
+@media (max-width: 370px) {
+  .problem-card { font-size: 12px; }
+}
+</style>
+</head>
+
+<body>
+
+<!-- LANDING PAGE -->
+<div id="landing-view">
+
+<header>
+  <div class="wrap">
+    <nav>
+      <a href="#top" class="logo">≈ breakwater.</a>
+      <span class="small">IRISH SURF SCHOOLS</span>
+    </nav>
+  </div>
+</header>
+
+<div class="hero" id="top">
+  <div class="wrap hero-grid">
+    <div>
+      <div class="eyebrow">
+        Built for independent Irish surf schools
+      </div>
+
+      <h1>Less chasing.<br>More surfing.</h1>
+
+      <p>
+        When the weather cancels lessons,
+        Breakwater helps you rebook customers
+        and keep track of potential income.
+      </p>
+
+      <a class="btn"
+         href="https://normabryan.github.io/Demo/"
+         target="_blank"
+         rel="noopener noreferrer">
+        Try the live demo ↗
+      </a>
+    </div>
+
+    <img
+      src="https://images.unsplash.com/photo-1502680390469-be75c86b636f?auto=format&amp;fit=crop&amp;w=1200&amp;q=85"
+      alt="Surfer riding an ocean wave">
+  </div>
+</div>
+
+<section>
+  <div class="wrap">
+    <h2>The forecast changes.<br>Your workload doubles.</h2>
+
+    <p class="muted">
+      Cancelled lessons mean phone calls, messages
+      and customers waiting for another date.
+    </p>
+
+    <div class="problem-grid">
+      <div class="problem-card">
+        <span>🌧️</span>
+        <strong>Weather</strong>
+      </div>
+
+      <div class="problem-card">
+        <span>📞</span>
+        <strong>Chasing</strong>
+      </div>
+
+      <div class="problem-card">
+        <span>💶</span>
+        <strong>Lost bookings</strong>
+      </div>
+    </div>
+
+    <div class="quote">
+      <em>
+        “When the weather turns, I spend hours
+        trying to find everyone another lesson.”
+      </em>
+      <p class="fine">
+        Illustrative owner statement for this student
+        project, not a real interview.
+      </p>
+    </div>
+  </div>
+</section>
+
+<section class="how">
+  <div class="wrap">
+    <h2>Three steps back to the water.</h2>
+
+    <p class="muted">
+      A simpler way to handle cancellations,
+      rebook customers and see what's at risk.
+    </p>
+
+    <div class="steps">
+      <div class="step">
+        <span class="step-number">01</span>
+        <h3>Cancel a lesson</h3>
+        <p>
+          Move affected customers into the
+          rebooking queue.
+        </p>
+      </div>
+
+      <div class="step">
+        <span class="step-number">02</span>
+        <h3>Find another slot</h3>
+        <p>
+          See suitable future lessons
+          with enough spaces.
+        </p>
+      </div>
+
+      <div class="step">
+        <span class="step-number">03</span>
+        <h3>Protect your income</h3>
+        <p>
+          Track customers waiting and
+          the money at risk.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="price-section">
+  <div class="wrap">
+    <h2>Simple pricing. No big setup.</h2>
+    <p class="muted">
+      Designed for small independent surf schools.
+    </p>
+
+    <div class="price-card">
+      <div class="small">BREAKWATER STARTER</div>
+      <div class="price">
+        €49<small>/month</small>
+      </div>
+
+      <p>Plus €99 one-off setup</p>
+      <p>
+        Manage weather cancellations,
+        rebookings and money at risk.
+      </p>
+
+      <p class="fine">
+        Proposed student-project pricing.
+        Not a live commercial offer.
+      </p>
+    </div>
+  </div>
+</section>
+
+<section class="waitlist">
+  <div class="wrap">
+    <h2>Ready for calmer cancellation days?</h2>
+    <p>Join the demonstration waiting list.</p>
+
+    <form id="waitlist-form">
+      <input
+        type="email"
+        required
+        aria-label="Your email address"
+        placeholder="Your email address">
+
+      <button type="submit" class="btn dark">
+        Join waiting list
+      </button>
+    </form>
+
+    <div id="thanks" role="status" aria-live="polite">
+      ✓ Thank you! This is a demonstration.
+      No information was saved or sent.
+    </div>
+
+    <p class="fine">
+      Student project demonstration.
+      Email addresses are not collected or stored.
+    </p>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap footer-flex">
+    <a class="logo" href="#top">≈ breakwater.</a>
+    <a href="#behind-the-build">
+      Behind the Build →
+    </a>
+  </div>
+</footer>
+
+</div>
+
+<!-- BEHIND THE BUILD -->
+<div id="notes-view">
+
+<div class="notes-header">
+  <div class="wrap">
+    <a href="#landing" class="logo">≈ breakwater.</a>
+
+    <h1>Behind the Build</h1>
+
+    <p>
+      How I researched, built and presented Breakwater
+      for independent Irish surf schools.
+    </p>
+
+    <p>
+      Technology in Business |
+      Task 1: Think |
+      Task 2: Build |
+      Task 3: Sell
+    </p>
+  </div>
+</div>
+
+<main class="wrap notes-content">
+
+<a href="#landing" class="btn dark return">
+  ← Back to Landing Page
+</a>
+
+<article class="note-card">
+  <span class="tag">Task 1 — Think</span>
+  <h2>Finding the Opportunity</h2>
+
+  <h3>My original hunch before using AI</h3>
+  <div class="highlight">
+    “It could be used for different outdoor activities
+    that are seasonal or weather dependant like horse
+    riding, Kayaking or boat trips.”
+  </div>
+
+  <h3>The problem</h3>
+  <p>
+    The case business was Atlantic Edge Surf School
+    in Lahinch. Weather cancellations created extra
+    administration because customers had to be
+    contacted and rebooked.
+  </p>
+
+  <p>
+    The school had six sessions per day, twelve places
+    per session and five instructors. In the case,
+    weather cancellations occurred on approximately
+    one in four days. A cancelled day could involve
+    around three hours of manual rebooking work,
+    and approximately one in five cancelled bookings
+    was never rebooked.
+  </p>
+
+  <h3>My chosen niche and buyer</h3>
+  <p>
+    I decided to focus on independent Irish surf schools,
+    particularly along the Wild Atlantic Way. The intended
+    buyer is the surf school owner or manager responsible
+    for lessons, instructors and bookings.
+  </p>
+
+  <h3>Customer statements</h3>
+  <p>
+    I used illustrative customer statements to show
+    the owner's problem. These were invented examples,
+    not actual customer interviews.
+  </p>
+
+  <h3>Competitor research</h3>
+  <p>
+    I considered existing booking platforms including
+    <a href="https://eola.co/" target="_blank">eola</a>
+    and
+    <a href="https://simplybook.me/" target="_blank">
+      SimplyBook.me
+    </a>.
+    Breakwater focuses specifically on weather
+    cancellations and rebooking rather than
+    replacing every booking system.
+  </p>
+
+  <h3>Product hypothesis</h3>
+  <p>
+    If independent surf schools can quickly identify
+    affected bookings, find suitable new sessions and
+    see income at risk, they may spend less time chasing
+    customers after cancellations.
+  </p>
+
+  <h3>Proposed pricing</h3>
+  <p>
+    €99 one-off setup and €49 per month.
+    These prices are assumptions for the student
+    project and have not been validated with customers.
+  </p>
+</article>
+
+<article class="note-card">
+  <span class="tag">Task 2 — Build</span>
+  <h2>Building and Testing the Alpha</h2>
+
+  <h3>What I built</h3>
+  <p>
+    I used AI to help create a mobile-first prototype
+    in one HTML file containing HTML, CSS and JavaScript.
+    It used fourteen fictional sample bookings
+    and four views:
+  </p>
+
+  <ul>
+    <li><strong>Today:</strong> View lessons and cancel sessions.</li>
+    <li><strong>Rebook:</strong> See customers waiting for another session.</li>
+    <li><strong>Money:</strong> View potential booking income at risk.</li>
+    <li><strong>Calendar:</strong> View future sessions and available places.</li>
+  </ul>
+
+  <p>
+    The value at risk was calculated using €45 per person.
+    The rebooking queue used amber after 24 hours
+    and red after 48 hours.
+  </p>
+
+  <h3>Alpha test — What I tried</h3>
+  <p>
+    I tested the prototype on my computer by using
+    the cancellation and rebooking functions and
+    checking that the Money view updated.
+  </p>
+
+  <h3>What broke or confused me</h3>
+  <p>
+    Initially, the cancellation button did not work
+    correctly. I also found that the Calendar view
+    was missing from the first version.
+  </p>
+
+  <h3>What I changed</h3>
+  <p>
+    I asked AI to correct the cancellation function
+    and add the Calendar view. I then checked the
+    updated version on my computer and confirmed
+    the functions were working.
+  </p>
+
+  <h3>Phone test</h3>
+  <p>
+    After fixing the prototype on my computer,
+    I downloaded and opened it on my phone,
+    where it worked. I did not separately record
+    a full phone test of every capacity rule or
+    a browser refresh persistence test.
+  </p>
+
+  <h3>What I learned</h3>
+  <p>
+    AI helped me build the prototype quickly,
+    but I still needed to test the buttons and
+    check that the application worked as intended.
+    The first version was not perfect, and testing
+    helped me identify what needed to change.
+  </p>
+
+  <p>
+    <a href="https://normabryan.github.io/Demo/"
+       target="_blank">
+      View my published Task 2 alpha demo ↗
+    </a>
+  </p>
+</article>
+
+<article class="note-card">
+  <span class="tag">Task 3 — Sell</span>
+  <h2>Creating the Landing Page</h2>
+
+  <h3>Product name and promise</h3>
+  <p>
+    <strong>Breakwater — Less chasing. More surfing.</strong>
+    I wanted the headline to explain the benefit
+    immediately to a surf school owner.
+  </p>
+
+  <h3>How I presented the product</h3>
+  <p>
+    The landing page explains weather cancellations
+    and presents the product in three simple steps:
+    cancel a lesson, find another suitable slot,
+    and track customers and income at risk.
+  </p>
+
+  <h3>Calls to action</h3>
+  <p>
+    I included a Try the Live Demo button that opens
+    my published Task 2 prototype. I also included
+    a demonstration waiting-list form. The form
+    does not send, save or collect email addresses;
+    it only displays a thank-you message.
+  </p>
+
+  <h3>Pricing</h3>
+  <p>
+    I displayed a proposed €49 monthly price with
+    a €99 one-off setup fee. This is illustrative
+    pricing, not a confirmed commercial offer.
+  </p>
+
+  <h3>Design decisions</h3>
+  <p>
+    I used a dark navy and sea-green colour scheme
+    to connect the product visually with surfing
+    and the Atlantic coast. I designed the page
+    for mobile screens first because a surf school
+    owner may check bookings while working outdoors.
+  </p>
+
+  <h3>Limitations</h3>
+  <p>
+    Breakwater is an alpha student-project prototype,
+    not a fully launched commercial product.
+    The customer statements, prices and potential
+    benefits have not been validated through
+    real customer trials.
+  </p>
+
+  <h3>What I learned</h3>
+  <p>
+    This task helped me understand the difference
+    between building a working prototype and explaining
+    why someone might want to use it. The landing page
+    needed to focus on the owner's problem rather
+    than simply listing technology features.
+  </p>
+</article>
+
+<div class="note-card" style="text-align:center">
+  <h2>Back to Breakwater</h2>
+  <p>
+    Return to the landing page or explore
+    the working demo.
+  </p>
+
+  <a href="#landing" class="btn dark">
+    ← Back to Landing Page
+  </a>
+
+  <p>
+    <a href="https://normabryan.github.io/Demo/"
+       target="_blank">
+      Open the Live Demo ↗
+    </a>
+  </p>
+</div>
+
+</main>
+
+<div class="notes-footer">
+  <div class="wrap footer-flex">
+    <span>≈ breakwater. | Technology in Business</span>
+    <a href="#landing">Back to Landing Page</a>
+  </div>
+</div>
+
+</div>
+
+<script>
+(function () {
+  const landing = document.getElementById("landing-view");
+  const notes = document.getElementById("notes-view");
+
+  function render() {
+    const showNotes =
+      location.hash === "#behind-the-build";
+
+    landing.style.display = showNotes ? "none" : "block";
+    notes.style.display = showNotes ? "block" : "none";
+
+    document.title = showNotes
+      ? "Behind the Build | Breakwater"
+      : "Breakwater | Less chasing. More surfing.";
+
+    if (showNotes || location.hash === "#landing") {
+      window.scrollTo(0, 0);
+    }
+  }
+
+  window.addEventListener("hashchange", render);
+  render();
+
+  const form = document.getElementById("waitlist-form");
+
+  form.addEventListener("submit", function (event) {
+    event.preventDefault();
+    form.reset();
+    form.style.display = "none";
+    document.getElementById("thanks").style.display = "block";
+  });
+})();
+</script>
+
+</body>
+</html>
